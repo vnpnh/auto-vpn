@@ -166,7 +166,6 @@ cython_debug/
 *.key
 *.bat
 *.ini
-*.txt
 *.spec
 build/
 dist/

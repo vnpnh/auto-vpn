@@ -14,7 +14,8 @@ build_exe_options = {
 }
 
 base = None
-icon_path = r"E:\Python\AutoVPN\favicon.ico"
+current_directory = os.getcwd()
+icon_path = os.path.join(current_directory, "favicon.ico")
 
 executables = [
     Executable(
