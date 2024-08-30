@@ -54,6 +54,9 @@ class VPNCLI(SQLiteManager):
         self.display_app_info()
         if self.args.set_config and self.args.type:
             self.create_or_update_config()
+        if self.args.supported:
+            self.console.print("Supported VPN: cisco, forti", style="bold cyan")
+            sys.exit(0)
 
     def display_app_info(self):
         version_text = Text(f"Version: {VERSION_TEXT}", style="bold blue")
@@ -71,16 +74,11 @@ class VPNCLI(SQLiteManager):
 
     def display_stylized_ascii_art(self):
         ascii_art = Text(r"""
-           ____________________________________________________________________ 
-          |                                                                    |
-          |    ____________________________________________________________    |  
-          |   |                                                            |   |
-          |   |   /\    |   |  --------  |----|   \    /   |----|   |\   | |   |  
-          |   |  /__\   |   |     |      |    |    \  /    |----|   |  \ | |   |
-          |   | /    \  |___|     |      |----|     \/     |        |   \| |   |
-          |   |____________________________________________________________|   |  
-          |                                                                    |
-          |____________________________________________________________________|
+            ____________  _______________     ___    ______________   __
+            ___    |_  / / /__  __/_  __ \    __ |  / /__  __ \__  | / /
+            __  /| |  / / /__  /  _  / / /    __ | / /__  /_/ /_   |/ / 
+            _  ___ / /_/ / _  /   / /_/ /     __ |/ / _  ____/_  /|  /  
+            /_/  |_\____/  /_/    \____/      _____/  /_/     /_/ |_/
         """, style="bold red")
         self.console.print(ascii_art)
 
@@ -100,6 +98,7 @@ class VPNCLI(SQLiteManager):
         parser.add_argument("-sc","--set-config", type=str, help="Set the VPN client executable path")
         parser.add_argument("-t","--type", type=str, choices=[VPNService.CISCO, VPNService.FORTI], help="Type of VPN client (e.g., cisco)")
         parser.add_argument("--delete", action="store_true", help="Delete a specific configuration by name")
+        parser.add_argument("--supported", action="store_true", help="List supported VPN types")
 
         connect_parser = subparsers.add_parser(VPNConst.CONNECT, help="Connect to VPN")
         connect_parser.add_argument("vpn_type", choices=[VPNService.CISCO, VPNService.FORTI],
